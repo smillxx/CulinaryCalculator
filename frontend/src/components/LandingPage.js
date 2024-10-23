@@ -15,6 +15,7 @@ function LandingPage() {
   const [costFile, setCostFile] = useState(null);
   const [recipeFile, setRecipeFile] = useState(null);
   const [totalPortions, setTotalPortions] = useState(1);
+  const [overheadPercentage, setOverheadPercentage] = useState(0);
   const [uploadedRecipeData, setUploadedRecipeData] = useState([]);
   const [uploadedCostData, setUploadedCostData] = useState([]);
 
@@ -126,7 +127,7 @@ function LandingPage() {
 
   return (
     <Box sx={{ textAlign: 'center', mt: 5 }}>
-      <Typography variant="h4" gutterBottom>Welcome to the Culinary Budget</Typography>
+      <Typography variant="h4" gutterBottom>Welcome to the Culinary Calculator</Typography>
       <Box sx={{ mt: 3 }}>
         <Button variant="contained" color="primary" onClick={handleManualRecipeOpen}>
           Manually Enter Recipe
@@ -285,6 +286,17 @@ function LandingPage() {
         />
       </Box>
       <Box sx={{ mt: 2 }}>
+        <TextField
+          label="Overhead Charge Percentage (e.g., 10%)"
+          type="number"
+          value={overheadPercentage}
+          onChange={(e) => setOverheadPercentage(e.target.value)}
+          fullWidth
+          variant="outlined"
+          margin="normal"
+        />
+      </Box>
+      <Box sx={{ mt: 2 }}>
         <Button variant="contained" color="primary" onClick={() => {
           const portions = 1; // Example portions value; you can modify this
           console.log('Calculating cost per portion for portions:', portions); // Debugging line
@@ -305,11 +317,14 @@ function LandingPage() {
             portions,
             totalPortions,
             recipeData,
-            costData
+            costData,
+            overheadPercentage: overheadPercentage / 100
           })
           .then((response) => {
             console.log('Calculation response:', response.data); // Debugging line
-            alert(`Cost per portion: ${response.data.costPerPortion}`);
+            const overheadMultiplier = 1 + overheadPercentage / 100;
+            const finalCostPerPortion = response.data.costPerPortion * overheadMultiplier;
+            alert(`Cost per portion (including overhead): ${finalCostPerPortion.toFixed(2)}`);
           })
           .catch((error) => {
             console.error('Calculation error:', error); // Debugging line
