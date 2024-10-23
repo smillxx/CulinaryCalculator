@@ -42,7 +42,7 @@ function LandingPage() {
     console.log('Uploading Recipe File:', event.target.files[0]); // Debugging line
 
     // Send the file to the backend
-    axios.post('http://localhost:3000/api/recipes/upload-recipe', formData, {
+    axios.post('http://52.5.232.71:8080/api/recipes/upload-recipe', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -68,7 +68,7 @@ function LandingPage() {
     console.log('Uploading Cost File:', event.target.files[0]); // Debugging line
 
     // Send the file to the backend
-    axios.post('http://localhost:3000/api/recipes/upload-cost', formData, {
+    axios.post('http://52.5.232.71:8080/api/recipes/upload-cost', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -277,7 +277,7 @@ function LandingPage() {
             return;
           }
 
-          axios.post('http://localhost:3000/api/recipes/calculate-portion-price', {
+          axios.post('http://52.5.232.71:8080/api/recipes/calculate-portion-price', {
             portions,
             totalPortions,
             recipeData,
