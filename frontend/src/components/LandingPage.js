@@ -126,7 +126,7 @@ function LandingPage() {
 
   return (
     <Box sx={{ textAlign: 'center', mt: 5 }}>
-      <Typography variant="h4" gutterBottom>Welcome to the Culinary Calculator</Typography>
+      <Typography variant="h4" gutterBottom>Welcome to the Culinary Budget</Typography>
       <Box sx={{ mt: 3 }}>
         <Button variant="contained" color="primary" onClick={handleManualRecipeOpen}>
           Manually Enter Recipe

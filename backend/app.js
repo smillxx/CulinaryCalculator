@@ -13,7 +13,7 @@ app.use('/api/recipes', recipeRoutes);
 
 // Default route for root URL
 app.get('/', (req, res) => {
-  res.send('Welcome to the Culinary Calculator API');
+  res.send('Welcome to the Culinary Budget API');
 });
 
 const PORT = process.env.PORT || 3000;
