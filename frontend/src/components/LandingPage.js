@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Box, Typography, Dialog, DialogTitle, DialogContent, TextField, Grid } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import axios from 'axios';
-import logo from '../assets/culinarybudget.webp';
+import logo from '../assets/culinarybudget.png';
 
 function LandingPage() {
   const [openManualRecipe, setOpenManualRecipe] = useState(false);
