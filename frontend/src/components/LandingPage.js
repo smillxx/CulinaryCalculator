@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Box, Typography, Dialog, DialogTitle, DialogContent, TextField, Grid } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import axios from 'axios';
+import logo from '../assets/culinarybudget.webp';
 
 function LandingPage() {
   const [openManualRecipe, setOpenManualRecipe] = useState(false);
@@ -113,7 +114,10 @@ function LandingPage() {
 
   return (
     <Box sx={{ textAlign: 'center', mt: 5 }}>
-      <Typography variant="h4" gutterBottom>Welcome to the Culinary Calculator</Typography>
+      <Box sx={{ textAlign: 'center', mt: 3 }}>
+        <img src={logo} alt="Culinary Calculator Logo" style={{ maxWidth: '150px', marginBottom: '20px' }} />
+      </Box>
+      <Typography variant="h4" gutterBottom>Welcome to the Culinary Budget</Typography>
       <Box sx={{ mt: 3 }}>
         <Button variant="contained" color="primary" onClick={handleManualRecipeOpen}>
           Manually Enter Recipe
