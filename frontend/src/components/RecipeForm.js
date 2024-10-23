@@ -7,7 +7,7 @@ function RecipeForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://52.5.232.71:8080/api/recipes/add', {
+    const response = await fetch('https://backend.culinarybudget.com/api/recipes/add', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipe),
