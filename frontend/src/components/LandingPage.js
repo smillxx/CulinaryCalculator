@@ -3,24 +3,6 @@ import { Button, Box, Typography, Dialog, DialogTitle, DialogContent, TextField,
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import axios from 'axios';
 import logo from '../assets/culinarybudget.png';
-import GoogleAd from './GoogleAd';
-
-// GoogleAd Component defined within the same file
-function GoogleAd() {
-  useEffect(() => {
-    if (window.adsbygoogle && process.env.NODE_ENV !== "development") {
-      window.adsbygoogle.push({});
-    }
-  }, []);
-
-  return (
-    <ins className="adsbygoogle"
-      style={{ display: 'block' }}
-      data-ad-client="ca-pub-3839139440641324"  // Replace with your AdSense Publisher ID
-      data-ad-format="auto"
-      data-full-width-responsive="true"></ins>
-  );
-}
 
 function LandingPage() {
   const [openManualRecipe, setOpenManualRecipe] = useState(false);
@@ -35,20 +17,6 @@ function LandingPage() {
   const [overheadPercentage, setOverheadPercentage] = useState(0);
   const [uploadedRecipeData, setUploadedRecipeData] = useState([]);
   const [uploadedCostData, setUploadedCostData] = useState([]);
-
-  return (
-    <Box sx={{ textAlign: 'center', mt: 5 }}>
-      {/* Your existing components and layout */}
-      <Typography variant="h4" gutterBottom>Welcome to the Culinary Calculator</Typography>
-      
-      {/* Add the Google Ad component to display ads */}
-      <Box sx={{ mt: 4 }}>
-        <GoogleAd />
-      </Box>
-
-      {/* Rest of your LandingPage code */}
-    </Box>
-  );
 
   useEffect(() => {
     console.log('Updated Recipe Data:', uploadedRecipeData);
