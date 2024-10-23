@@ -5,9 +5,7 @@ import axios from 'axios';
 
 function LandingPage() {
   const [openManualRecipe, setOpenManualRecipe] = useState(false);
-  const [openFileUpload, setOpenFileUpload] = useState(false);
   const [openManualCost, setOpenManualCost] = useState(false);
-  const [openCostFileUpload, setOpenCostFileUpload] = useState(false);
   const [manualRecipe, setManualRecipe] = useState({ name: '', ingredients: [] });
   const [ingredient, setIngredient] = useState({ name: '', quantity: '' });
   const [manualCost, setManualCost] = useState({ ingredients: [] });
@@ -30,71 +28,59 @@ function LandingPage() {
   // Handlers for opening and closing dialogs
   const handleManualRecipeOpen = () => setOpenManualRecipe(true);
   const handleManualRecipeClose = () => setOpenManualRecipe(false);
-  const handleFileUploadOpen = () => setOpenFileUpload(true);
-  const handleFileUploadClose = () => {
-    if (recipeFile) {
-      const formData = new FormData();
-      formData.append('file', recipeFile);
-
-      console.log('Uploading Recipe File:', recipeFile); // Debugging line
-
-      // Send the file to the backend
-      axios.post('http://localhost:3000/api/recipes/upload-recipe', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((response) => {
-        console.log('Recipe upload response:', response.data); // Debugging line
-        alert(response.data.message);
-        setUploadedRecipeData(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Recipe upload error:', error); // Debugging line
-        alert(`Error: ${error.response ? error.response.data : 'Failed to upload file'}`);
-      });
-    }
-
-    setOpenFileUpload(false);
-  };
   const handleManualCostOpen = () => setOpenManualCost(true);
   const handleManualCostClose = () => setOpenManualCost(false);
-  const handleCostFileUploadOpen = () => setOpenCostFileUpload(true);
-  const handleCostFileUploadClose = () => {
-    if (costFile) {
-      const formData = new FormData();
-      formData.append('file', costFile);
-
-      console.log('Uploading Cost File:', costFile); // Debugging line
-
-      // Send the file to the backend
-      axios.post('http://localhost:3000/api/recipes/upload-cost', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((response) => {
-        console.log('Cost upload response:', response.data); // Debugging line
-        alert(response.data.message);
-        setUploadedCostData(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Cost upload error:', error); // Debugging line
-        alert(`Error: ${error.response ? error.response.data : 'Failed to upload file'}`);
-      });
-    }
-
-    setOpenCostFileUpload(false);
-  };
 
   const handleRecipeFileChange = (event) => {
     setRecipeFile(event.target.files[0]);
     console.log('Selected Recipe File:', event.target.files[0]); // Debugging line
+
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
+
+    console.log('Uploading Recipe File:', event.target.files[0]); // Debugging line
+
+    // Send the file to the backend
+    axios.post('http://localhost:3000/api/recipes/upload-recipe', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      console.log('Recipe upload response:', response.data); // Debugging line
+      alert(response.data.message);
+      setUploadedRecipeData(response.data.data);
+    })
+    .catch((error) => {
+      console.error('Recipe upload error:', error); // Debugging line
+      alert(`Error: ${error.response ? error.response.data : 'Failed to upload file'}`);
+    });
   };
 
   const handleCostFileChange = (event) => {
     setCostFile(event.target.files[0]);
     console.log('Selected Cost File:', event.target.files[0]); // Debugging line
+
+    const formData = new FormData();
+    formData.append('file', event.target.files[0]);
+
+    console.log('Uploading Cost File:', event.target.files[0]); // Debugging line
+
+    // Send the file to the backend
+    axios.post('http://localhost:3000/api/recipes/upload-cost', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      console.log('Cost upload response:', response.data); // Debugging line
+      alert(response.data.message);
+      setUploadedCostData(response.data.data);
+    })
+    .catch((error) => {
+      console.error('Cost upload error:', error); // Debugging line
+      alert(`Error: ${error.response ? error.response.data : 'Failed to upload file'}`);
+    });
   };
 
   const handleAddIngredient = () => {
@@ -183,25 +169,6 @@ function LandingPage() {
         </Dialog>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Button variant="contained" color="secondary" startIcon={<UploadFileIcon />} onClick={handleFileUploadOpen}>
-          Upload Recipe File
-        </Button>
-        <Dialog open={openFileUpload} onClose={handleFileUploadClose}>
-          <DialogTitle>Upload Recipe File</DialogTitle>
-          <DialogContent>
-            <Button
-              variant="contained"
-              component="label"
-              color="primary"
-              startIcon={<UploadFileIcon />}
-            >
-              Choose File
-              <input type="file" accept=".txt,.csv,.json" hidden onChange={handleRecipeFileChange} />
-            </Button>
-          </DialogContent>
-        </Dialog>
-      </Box>
-      <Box sx={{ mt: 2 }}>
         <Button variant="contained" color="primary" onClick={handleManualCostOpen}>
           Manually Enter Cost Information
         </Button>
@@ -256,23 +223,16 @@ function LandingPage() {
         </Dialog>
       </Box>
       <Box sx={{ mt: 2 }}>
-        <Button variant="contained" color="secondary" startIcon={<UploadFileIcon />} onClick={handleCostFileUploadOpen}>
-          Upload Cost File
+        <Button variant="contained" color="secondary" startIcon={<UploadFileIcon />} component="label">
+          Upload Recipe File
+          <input type="file" accept=".txt,.csv,.json" hidden onChange={handleRecipeFileChange} />
         </Button>
-        <Dialog open={openCostFileUpload} onClose={handleCostFileUploadClose}>
-          <DialogTitle>Upload Cost File</DialogTitle>
-          <DialogContent>
-            <Button
-              variant="contained"
-              component="label"
-              color="primary"
-              startIcon={<UploadFileIcon />}
-            >
-              Choose File
-              <input type="file" accept=".txt,.csv,.json" hidden onChange={handleCostFileChange} />
-            </Button>
-          </DialogContent>
-        </Dialog>
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <Button variant="contained" color="secondary" startIcon={<UploadFileIcon />} component="label">
+          Upload Cost File
+          <input type="file" accept=".txt,.csv,.json" hidden onChange={handleCostFileChange} />
+        </Button>
       </Box>
       <Box sx={{ mt: 2 }}>
         <TextField
