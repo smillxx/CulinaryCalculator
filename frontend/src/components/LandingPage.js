@@ -49,7 +49,6 @@ function LandingPage() {
       {/* Rest of your LandingPage code */}
     </Box>
   );
-}
 
   useEffect(() => {
     console.log('Updated Recipe Data:', uploadedRecipeData);
